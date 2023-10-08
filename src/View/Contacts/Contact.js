@@ -49,7 +49,10 @@ function Contact() {
       email: email
     }
 
-    setContact([...contact, obj])
+    const newContact = [...contact, obj];
+
+    setContact(newContact)
+    saveToLocalStorage(newContact);
 
     showToast('Contact Added Successfully', 'success', 5000);
 
@@ -67,9 +70,23 @@ function Contact() {
     })
 
     contact.splice(deleteindex,1);
+    saveToLocalStorage(contact)
     showToast('Contact deleted Successfully','success',2000)
     setContact([...contact])
   }
+  const saveToLocalStorage = (contacts) => {
+    localStorage.setItem('contacts',JSON.stringify(contacts))
+  }
+  const loadContact = () => {
+    const contactData = JSON.parse(localStorage.getItem('contacts'));
+
+    if(contactData){
+      setContact(contactData);
+    }
+  }
+  useEffect(()=> {
+    loadContact();
+  },[])
 
   return (
     <div className='Contacts'>
