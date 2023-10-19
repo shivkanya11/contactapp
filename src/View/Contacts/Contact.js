@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 // import Footer from './../../Component/Footer/Footer'
 import Navbar from './../../Component/Navbar/Navbar'
 import './Contact.css'
@@ -74,6 +74,14 @@ function Contact() {
     showToast('Contact deleted Successfully','success',2000)
     setContact([...contact])
   }
+
+  const editContact=(index)=>{
+    const contactData = contact[index]
+    setName(contactData.name)
+    setMble(contactData.mble)
+    setEmail(contactData.email)
+  }
+
   const saveToLocalStorage = (contacts) => {
     localStorage.setItem('contacts',JSON.stringify(contacts))
   }
@@ -106,6 +114,8 @@ function Contact() {
                   mble={contact.mble}
                   email={contact.email}
                   deleteContact={deleteContact}
+                  editContact={editContact}
+                  index={index}
                 />
               )
             })
